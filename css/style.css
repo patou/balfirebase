@@ -1,0 +1,16 @@
+.hero-widget { text-align: center; padding-top: 10px; padding-bottom: 10px; }
+.hero-widget .icon { display: block; font-size: 48px; line-height: 48px; margin-bottom: 5px; text-align: center; }
+.hero-widget var { display: block; height: 32px; font-size: 32px; line-height: 32px; font-style: normal; }
+.hero-widget label { font-size: 17px; }
+.page-header {
+  margin-top: 55px;
+ }
+ .navbar {
+  border-color: #e42012;
+  background-color: #ef473a;
+  background-image: linear-gradient(0deg, #e42012, #e42012 50%, transparent 50%);
+  color: #fff;
+}
+.navbar a,.navbar a:visited {
+  color: #fff;
+}

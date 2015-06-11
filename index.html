@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	   <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bal des Parisiennes : Billetterie</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+		<script src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		
+		<link rel="stylesheet" href="css/style.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script src="js/commons.js"></script>
+		<script src="js/app.js"></script>
+
+	</head>
+	<body ng-app="balApp" ng-controller="InvitesCtrl">
+		<nav class="navbar navbar-fixed-top">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#">Bal des parisiennes</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+			  <ul class="nav navbar-nav navbar-right">
+				<li><a href="#" ng-click="updateInvites()">Mettre à jour</a></li>
+				<li><a href="http://www.baldesparisiennes.com">Site</a></li>
+			  </ul>
+			  <form class="navbar-form navbar-right">
+				
+			  </form>
+			</div>
+		  </div>
+		</nav>
+	<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main">
+          
+		  <h1 class="page-header">Tableau de bords</h1>
+
+          <div class="row placeholders">
+            		<div class="col-sm-3">
+    	    <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-user"></i>
+                </div>
+                <div class="text">
+                    <var>{{invites.length}}</var>
+                    <label class="text-muted">Invites</label>
+                </div>
+            </div>
+		</div>
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-star"></i>
+                </div>
+                <div class="text">
+                    <var>{{(invites | filter:{valider:'true'}).length}}</var>
+                    <label class="text-muted">Entrées</label>
+                </div>
+            </div>
+		</div>
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-tags"></i>
+                </div>
+                <div class="text">
+                    <var>{{invites.length - (invites | filter:{valider:'true'}).length}}</var>
+                    <label class="text-muted">Restant</label>
+                </div>
+            </div>
+    	</div>
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-cog"></i>
+                </div>
+                <div class="text">
+                    <var>0</var>
+                    <label class="text-muted">Clients</label>
+                </div>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Invites</h2>
+		  <form class="form-inline">
+			<div class="form-group">
+				<input type="text" class="form-control" ng-model="searchText" placeholder="Recherche..."/>
+			</div>
+			<div class="form-group">
+				<select class="form-control" ng-model="orderBy">
+				  <option>id</option>
+				  <option>prenom</option>
+				  <option>nom</option>
+				</select>
+			</div>
+		  </form>
+          <div class="table-responsive">
+			<table  class="table table-striped">
+			<thead>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Email</th>
+					<th>Produit</th>
+					<th>Valider</th>
+				</tr>
+			</thead>
+			<!-- arrays are fully sortable and filterable -->
+			<tbody>
+				<tr ng-repeat="invite in invites | orderBy:orderBy | searchField: 'prenom':'nom' | fuzzy:searchText" ng-class="{success: invite.valider == 'true'}">
+					<td>{{invite.prenom}}</td>
+					<td>{{invite.nom}}</td>
+					<td>{{invite.email}}</td>
+					<td>{{invite.produit}}</td>
+					<td><button class="btn btn-primary btn-xs" ng-click="valider(invite)" ng-hide="invite.valider == 'true'" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-ok"></span></button></td>
+				</tr>
+			</tbody>
+		  </table>
+          </div>
+        </div>
+      </div>
+    </div>
+	</body>
+</html>
