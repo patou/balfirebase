@@ -104,8 +104,8 @@ app.controller("HeaderCtrl", ["$scope", "$http", "ref",
 	};
   }
 ]);
-app.controller("ClientsCtrl", ["$scope", "$http", "clientsFactory",
-  function($scope, $http, clientsFactory) {
+app.controller("ClientsCtrl", ["$scope", "$http", "$timeout", "ref", "clientsFactory",
+  function($scope, $http, $timeout, ref, clientsFactory) {
     $scope.clients = clientsFactory.clients();
 	$scope.infoClient = function(id) {
 		clientsFactory.getClient(id).success(function(result) {
@@ -114,7 +114,27 @@ app.controller("ClientsCtrl", ["$scope", "$http", "clientsFactory",
 		});
 	}
 	$scope.validerInvites = function(invites) {
-		console.log(invites);
+		var ids = [];
+		var validInvites = [];
+		angular.forEach(invites, function(invite) {
+			if (invite.valider != 'true' && invite.check) {
+				this.push(invite.id);
+				validInvites.push(invite.prenom + ' '+invite.nom);
+				ref.child(''+invite.id).child('valider').set("true");
+			}
+		}, ids);
+		if (ids.length > 0) {
+			console.log(ids);
+			$http.get('http://www.baldesparisiennes.com/billets/valid.php?inviteId='+ids.join(',')).success(function(result) {
+				$scope.validInvites = validInvites;
+				$timeout(function() {
+					$scope.validInvites = false;
+				}, 3000);
+			})
+			.error(function(error) {
+				$scope.error(error);
+			});
+		}
 		$('#infoClient').modal('hide');
 	};
   }

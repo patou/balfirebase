@@ -114,7 +114,7 @@
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="invites" ng-controller="InvitesCtrl">
 								<h2 class="sub-header">Invites</h2>
-								<div class="alert alert-success" role="alert" ng-show="validInvite">{{validInvite.prenom}} {{validInvite.nom}} a bien été validé <button type="button" class="close" ng-click="validInvite = false"><span aria-hidden="true">&times;</span></button></div>
+								<div class="alert alert-fixed alert-success" role="alert" ng-show="validInvite">{{validInvite.prenom}} {{validInvite.nom}} a bien été validé <button type="button" class="close" ng-click="validInvite = false"><span aria-hidden="true">&times;</span></button></div>
 								<form class="form-inline">
 									<div class="form-group">
 										<input type="text" class="form-control" ng-model="searchText" placeholder="Recherche..."/>
@@ -158,6 +158,7 @@
 							</div>
 							<div role="tabpanel" class="tab-pane" id="clients" ng-controller="ClientsCtrl">
 								<h2 class="sub-header">Clients</h2>
+								<div class="alert alert-fixed alert-success" role="alert" ng-show="validInvites">{{validInvites.join(', ')}} <ng-pluralize count="validInvites.length" when="{'0': '',  'one': 'a bien été validé.', 'other': ' ont bien été validé.'}"></ng-pluralize> <button type="button" class="close" ng-click="validInvite = false"><span aria-hidden="true">&times;</span></button></div>
 								<form class="form-inline">
 									<div class="form-group">
 										<input type="text" class="form-control" ng-model="searchText" placeholder="Recherche..."/>
@@ -222,8 +223,8 @@
 														<li class="list-group-item" ng-repeat="invite in client.invites">
 															{{invite.prenom}} {{invite.nom}}
 															<div class="btn-group  pull-right" data-toggle="buttons" ng-hide="invite.valider == 'true'">
-																<label class="btn btn-check btn-success btn-xs active">
-																	<input type="checkbox" autocomplete="off" ng-model="invite.check" checked>
+																<label class="btn btn-check btn-success btn-xs active" ng-click="invite.check = !invite.check" ng-init="invite.check = true">
+																	<input type="checkbox" autocomplete="off" checked>
 																	<span class="glyphicon glyphicon-ok"></span>
 																</label>
 															</div>
