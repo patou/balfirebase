@@ -100,7 +100,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="progress">
+						<div class="progress" title="Nombres d'entrées au bal">
 							<div class="progress-bar" role="progressbar" aria-valuenow="{{(invites | filter:{valider:'true'}).length}}" aria-valuemin="0" aria-valuemax="{{invites.length}}" ng-style="{'width': ((((invites | filter:{valider:'true'}).length) * 100) / invites.length) + '%'}">
 								
 							</div>
@@ -159,6 +159,11 @@
 							<div role="tabpanel" class="tab-pane" id="clients" ng-controller="ClientsCtrl">
 								<h2 class="sub-header">Clients</h2>
 								<div class="alert alert-fixed alert-success" role="alert" ng-show="validInvites">{{validInvites.join(', ')}} <ng-pluralize count="validInvites.length" when="{'0': '',  'one': 'a bien été validé.', 'other': ' ont bien été validé.'}"></ng-pluralize> <button type="button" class="close" ng-click="validInvite = false"><span aria-hidden="true">&times;</span></button></div>
+								<div class="progress" title="Nombres de billets Emis">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{(clients | filter:{billetEmis:1}).length}}" aria-valuemin="0" aria-valuemax="{{clients.length}}" ng-style="{'width': ((((clients | filter:{billetEmis:1}).length) * 100) / clients.length) + '%'}">
+								
+									</div>
+								</div>
 								<form class="form-inline">
 									<div class="form-group">
 										<input type="text" class="form-control" ng-model="searchText" placeholder="Recherche..."/>
