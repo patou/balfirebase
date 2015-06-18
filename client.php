@@ -13,19 +13,24 @@ include RACINE_SERVEUR.'modeles/Commandes.class.php';
 try {
 	$idClient = $_GET['idClient'];
 	$customer = Clients::getOneCustomer($idClient);
-	$commandes = Commandes::getCommandeClient($idClient);
-	$ids = [];
-	$totalCommande = 0;
-	foreach ($commandes as $commande) {
-		$ids[] = $commande['id'];
-		$totalCommande += $commande['total'];
-	}
-	$produits = Commandes::getLigneCommandeByCommandesId($ids);
+	if ($customer) {
+		$commandes = Commandes::getCommandeClient($idClient);
+		$ids = [];
+		$totalCommande = 0;
+		foreach ($commandes as $commande) {
+			$ids[] = $commande['id'];
+			$totalCommande += $commande['total'];
+		}
+		$produits = Commandes::getLigneCommandeByCommandesId($ids);
 
-	$invites = Invites::getInvitesByCommandesId($ids);
-			
-	unset($customer['motPasse']);
-	$return = array('info' => $customer, 'commandes' => $commandes, 'produits' => $produits, 'invites' => $invites);
+		$invites = Invites::getInvitesByCommandesId($ids);
+				
+		unset($customer['motPasse']);
+		$return = array('info' => $customer, 'commandes' => $commandes, 'produits' => $produits, 'invites' => $invites);
+	}
+	else {
+		$return = false;
+	}
 	header('Access-Control-Allow-Origin: *');
 	header('Access-Control-Allow-Methods: GET, POST');
 	header('content-type: application/json; charset=utf-8');

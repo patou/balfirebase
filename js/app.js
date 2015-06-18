@@ -22,7 +22,7 @@ app.factory("invites", ["ref", "$firebaseArray",
 app.factory("clientsFactory", ["$http", 
   function($http) {
 	var clients = [];
-    $http.get('http://www.baldesparisiennes.com/billets/clients.php').success(function(result) {
+    $http.get('http://www.baldesparisiennes.com/admin/clients.php').success(function(result) {
 		angular.forEach(result, function(value, key) {
 		  this.push(value);
 		}, clients);
@@ -38,7 +38,7 @@ app.factory("clientsFactory", ["$http",
 			return clients.length;
 		},
 		getClient: function(id) {
-			return $http.get('http://www.baldesparisiennes.com/billets/client.php?idClient='+id)
+			return $http.get('http://www.baldesparisiennes.com/admin/client.php?idClient='+id)
 		}
 	};
   }
@@ -57,7 +57,7 @@ app.controller("InvitesCtrl", ["$scope", "$http", "$timeout", "ref", "invites",
 	$scope.validInvite = false;
 	
 	$scope.valider = function(invite) {
-		$http.get('http://www.baldesparisiennes.com/billets/valid.php?inviteId='+invite.id).success(function(result) {
+		$http.get('http://www.baldesparisiennes.com/admin/valid.php?inviteId='+invite.id).success(function(result) {
 			$scope.validInvite = invite;
 			$timeout(function() {
 				$scope.validInvite = false;
@@ -80,7 +80,7 @@ app.controller("InvitesCtrl", ["$scope", "$http", "$timeout", "ref", "invites",
 		  closeOnConfirm: false
 		},
 		function(){
-			$http.get('http://www.baldesparisiennes.com/billets/valid.php?cancel=true&inviteId='+invite.id).success(function(result) {
+			$http.get('http://www.baldesparisiennes.com/admin/valid.php?cancel=true&inviteId='+invite.id).success(function(result) {
 				swal("Fait!", "L'entrée au bal de "+invite.prenom+" "+invite.nom+" est bien annulé", "success");
 			})
 			.error(function(error) {
@@ -95,7 +95,7 @@ app.controller("InvitesCtrl", ["$scope", "$http", "$timeout", "ref", "invites",
 app.controller("HeaderCtrl", ["$scope", "$http", "ref",
   function($scope, $http, ref) {
 	$scope.updateInvites = function() {
-		$http.get('http://www.baldesparisiennes.com/billets/export.php'+(confirm("Réinitialiser les invités ? /!\\ Cette action est irreversible")?'?reset=true':'')).success(function(result) {
+		$http.get('http://www.baldesparisiennes.com/admin/export.php'+(confirm("Réinitialiser les invités ? /!\\ Cette action est irreversible")?'?reset=true':'')).success(function(result) {
 			ref.set(result);
 		})
 		.error(function(error) {
@@ -125,7 +125,7 @@ app.controller("ClientsCtrl", ["$scope", "$http", "$timeout", "ref", "clientsFac
 		}, ids);
 		if (ids.length > 0) {
 			console.log(ids);
-			$http.get('http://www.baldesparisiennes.com/billets/valid.php?inviteId='+ids.join(',')).success(function(result) {
+			$http.get('http://www.baldesparisiennes.com/admin/valid.php?inviteId='+ids.join(',')).success(function(result) {
 				$scope.validInvites = validInvites;
 				$timeout(function() {
 					$scope.validInvites = false;
