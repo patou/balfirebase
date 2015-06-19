@@ -127,7 +127,7 @@
 										  <option>nom</option>
 										</select>
 									</div>
-									
+									<button class="button button-light" ng-click="openAddInviteModal()">Ajouter invité</button>
 								</form>
 								<div class="table-responsive">
 									<table  class="table table-striped">
@@ -154,6 +154,33 @@
 											</tr>
 										</tbody>
 									</table>
+								</div>
+								<div class="modal fade" id="addInvite" tabindex="-1" role="dialog" aria-labelledby="Ajout invité" aria-hidden="true">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Ajouter invite</h4>
+											</div>
+											<div class="modal-body">
+												<div class="form-group">
+												<label for="invitePrenom">Prenom</label>
+												<input type="nom" ng-model="newInvite.prenom" class="form-control" id="invitePrenom" required>
+												</div>
+												<div class="form-group">
+												<label for="inviteNom">Nom</label>
+												<input type="nom" ng-model="newInvite.nom" class="form-control" id="inviteNom" required>
+												</div>
+												<div class="form-group">
+												<label for="exampleInputEmail1">Email</label>
+												<input type="email" class="form-control" ng-model="newInvite.email" id="exampleInputEmail1">
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+												<button type="button" class="btn btn-success" ng-click="addInvite(newInvite)">Ajouter</button>
+											 </div>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="clients" ng-controller="ClientsCtrl">

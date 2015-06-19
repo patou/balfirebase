@@ -90,6 +90,23 @@ app.controller("InvitesCtrl", ["$scope", "$http", "$timeout", "ref", "invites",
 		});
 		
 	}
+	$scope.openAddInviteModal = function() {
+		$('#addInvite').modal();
+	}
+	$scope.addInvite = function(invite) {
+		invite['idCommande'] = 1;
+		$http.post('http://www.baldesparisiennes.com/admin/invite.php', invite).success(function(result) {
+				$scope.validInvites = validInvites;
+				$timeout(function() {
+					$scope.validInvites = false;
+				}, 3000);
+				$('#addInvite').modal('hide');
+			})
+			.error(function(error) {
+				$scope.error(error);
+			});
+		
+	}
   }
 ]);
 app.controller("HeaderCtrl", ["$scope", "$http", "ref",
@@ -137,5 +154,6 @@ app.controller("ClientsCtrl", ["$scope", "$http", "$timeout", "ref", "clientsFac
 		}
 		$('#infoClient').modal('hide');
 	};
+	
   }
 ]);
