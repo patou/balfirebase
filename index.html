@@ -254,9 +254,12 @@
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 													<h4 class="modal-title">{{client.info.civilite}} {{client.info.prenom}} {{client.info.nom}}</h4>
-													<div class="icon pull-right" ng-show="client.info.billetEmis == 1" data-toggle="tooltip" data-placement="right" title="Le billet a été émis">
+													<a ng-href="http://www.baldesparisiennes.com/billets/generate.php?idClient={{client.info.id}}" target="_blank"  ng-show="client.info.billetEmis == 1" class="icon pull-right" data-toggle="tooltip" data-placement="right" title="Le billet {{client.info.id}} a été émis">
 														 <i class="glyphicon glyphicon-tags"></i>
-													</div>
+													</a>
+													<a ng-href="http://www.baldesparisiennes.com/billets/generate.php?idClient={{client.info.id}}" target="_blank" class="icon pull-right" data-toggle="tooltip" data-placement="right" title="Voir le billet {{client.info.id}}">
+														 <i class="glyphicon glyphicon-qrcode"></i>
+													</a>
 													<p class="list-group-item-text">{{client.info.email}} {{client.info.telephone}}</p>
 													<p class="list-group-item-text">{{client.info.adresse}} {{client.info.codePostal}} {{client.info.commune}}</p>
 												</div>
