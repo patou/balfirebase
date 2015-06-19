@@ -95,16 +95,16 @@ app.controller("InvitesCtrl", ["$scope", "$http", "$timeout", "ref", "invites",
 	}
 	$scope.addInvite = function(invite) {
 		invite['idCommande'] = 1;
-		$http.post('http://www.baldesparisiennes.com/admin/invite.php', invite).success(function(result) {
-				$scope.validInvites = validInvites;
-				$timeout(function() {
-					$scope.validInvites = false;
-				}, 3000);
+		$http.post('http://www.baldesparisiennes.com/admin/invite.php', JSON.stringify(invite)).success(function(invite) {
+				if (invite.id) {
+					swal("Fait!", "L'ajout de l'invité "+invite.prenom+" "+invite.nom+" est réalisé", "success");
+					ref.child(''+invite.id).set(invite);
+				}
 				$('#addInvite').modal('hide');
-			})
-			.error(function(error) {
-				$scope.error(error);
-			});
+		})
+		.error(function(error) {
+			$scope.error(error);
+		});
 		
 	}
   }
